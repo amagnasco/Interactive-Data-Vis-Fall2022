@@ -21,3 +21,21 @@ p {
 section {
   padding: 2em 0;
 }
+
+/* SVG css by https://stackoverflow.com/questions/30919053/creating-a-responsive-cloud-shape 
+sligtly modified by me */ 
+svg {
+  height: 50%;
+  width: 50%;
+}
+path {
+  fill: pink;
+  stroke: silver;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+path:hover {
+  fill: aliceblue;
+  stroke: lightskyblue;
+}
+/* end of someone else's code */

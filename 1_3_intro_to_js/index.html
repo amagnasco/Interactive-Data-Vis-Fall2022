@@ -7,9 +7,37 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <h1>Hello World!</h1>
+  <h1>Cloud Factory</h1>
   <h3>Tutorial Assignment: 1_3_intro_to_js </h3>
-  <!-- add any HTML you might need here, like a button or a div -->
-  <script src="main.js"></script>
+  <br>
+  <div>Nimbus cloud team OSHA compliance board</div>
+  </div>
+  <br>
+  <button type="button" id="poofButton" onclick="Poof()">Poof</button>
+  <button type="button" id="oopsButton" onclick="Oops()">Oops</button>
+  <br><br>
+  <table>
+    <tr>
+      <td>Poofs generated:</td>
+      <td><div id="poofCounter"></div></td>
+    </tr>
+    <tr>
+      <td>Poofs since last oops:</td>
+      <td><div id="oopsCounter"></div></td>
+    </tr>
+  </table>
+  <div id="cloud">
+    <!-- SVG path by https://stackoverflow.com/questions/30919053/creating-a-responsive-cloud-shape -->
+    <svg viewBox='0 0 105 105'>
+      <path d='M 25,60 
+              a 20,20 1 0,0 0,40 
+              h 50 
+              a 20,20 1 0,0 0,-40 
+              a 10,10 1 0,0 -15,-10 
+              a 15,15 1 0,0 -35,10  
+              z' />
+    </svg>
+    <!-- end of someone else's code -->
 </body>
+<script src="main.js"></script>
 </html>
