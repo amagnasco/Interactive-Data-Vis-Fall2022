@@ -29,7 +29,7 @@ d3.csv("bg_anon.csv", d3.autoType).then(data => {
 
   const colorScale = d3.scaleOrdinal()
     .domain([0,1])
-    .range(["blue", "red"])
+    .range(["lightblue", "red"])
 
   const rScale = d3.scaleLinear()
     .domain([0, d3.max(data, d => d.RepairCost)])
