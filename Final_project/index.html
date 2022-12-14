@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8">
+    <title>DVZ Final</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <h3>Demographic impact of Hurricane Sandy in NYC</h3>
+    <h5>by Alessandro G. Magnasco, amagnasco@gradcenter.cuny.edu</h5>
+    <h5>Final for DATA712, CUNY Graduate Center, Dec 2022. IRB approval #2022-0680-Baruch</h5> 
+    <p id="WIP">This represents a work in progress, part of several years' ongoing efforts. Instead of using or citing this version, find the final version in the author's upcoming MSci thesis in Data Analysis and Visualization (CUNY GC, summer 2023).
+    </p><br><br>
+    <p>
+      While the destruction caused by high-impact low-probability events such as hurricanes can be visible, their overall effects can be much harder to tease out. Something that might appear simple to measure, such as the number of people that were displaced by Hurricane Sandy in NYC, can quickly become hard to impossible depending on available data and operational definitions. This project presents several different attempts at measuring the demographic impact of Hurricane Sandy, which hit New York City in the fall of 2012. Hopefully, these methods can then be extended to other similar events.
+    </p><br><br>
+    <p>
+      The number of people displaced by such an event is a critically necessary datum, as it affects relief and reconstruction efforts, as well as planning for future events. However, much displacement happens as a localized "churn", and given the lack of longitudinal data tracking household level movement, it is very difficult to measure effectively using the larger geographies that are typically publically available. Therefore, the larger part of this analysis depends on restricted-use tract-level data, which was unfortunately received too late for this specific deadline, but which will be updated next week. Using QGIS, the percentage of residential units within inundation zones was calculated per PUMA (excluding buildings constructed since 2012); this allowed for a split into four categories of direct impact: very high (&gt;50%), high (20-50%), medium (10-20%), and low (&lt;10%). For each PUMA, the maximum such percentage across those areas directly adjacent was calculated; this allowed for a split into three categories of indirect impact: high (&gt;30%), medium (10-30%), and low (&lt;10%). A preliminary categorization (as used in these charts) used the three classes with highest direct impact, and split the lowest class of direct impact based on their indirect impact class. Displacement was measured in three different ways. The first uses the ACS estimate of the number of residents that have lived in their current residence for more than a year, and subtracts it from the number of residents that were estimated to live there the previous year, for the total number of out-migrants. The second and third use ACS population estimates and counts of births and deaths to calculate the crude growth rate and crude rate of natural increase, whose difference is the crude rate of net in-migration (CRNM). The second method multiplies the CRNM by the percentage of units affected, by the population count, for the total number of net in-migrants. The third method establishes a hypothetical three-year rolling average CRNM*, subtracts it from the observed rate, and multiplies it by the population count for the total count of net in-migrants. However, net in-migration undercounts the true values, as the forced displacement of lower-income BIPOC communities is counteracted with gentrification by higher-income white households that move into the vacated spaces. To account for this, the Gini index of income inequality and ACS respondents that self-identify as only white were also calculated. All of these rates and values are aggregated as the median per category per year, and citywide sum.
+    </p><br><br>
+    <p>
+      Redaction and transformations: ACS 1-year estimates were redacted by the Census Bureau for any PUMA whose population plus error was lower than 100,000. The NYC DOH publicly-accessible data, however, included the birth rate per 100,000 population, from which it was possible to calculate population estimates. The average differences by year between the ACS estimates and those derived from birth data ranged from -4% to +4%. The population estimates used for the rest of the analysis were those from the ACS data, with missing values filled in by the estimated values, corrected by the overall average difference for that year. Tract-level data was censored by the NYC DOH through k-anonymity at k=5, meaning that values between 1 and 4 were redacted and true zeroes were unaffected. Those values were averaged to 2.5. Some counts followed mid-year point estimates and others followed calendar year totals; the calendar year totals were averaged with those of the following year to "shift" the numbers forward six months to normalize all values to midyear estimates.
+    </p><br><br>
+		<p>
+      Data sources:
+      This event and location were chosen as it presents a clear impact, New York City being a relatively data-rich environment with substantial population and diversity. Restricted-use data of raw birth and death counts at a census tract level (CT2010) were provided by the NYC Dept. of Health and Mental Health upon request (on 2022-12-11), as well as public-use counts at the Community Board level (CD). NYC is divided into 59 CDs, which approximate 1:1 or 2:1 with Census Bureau Public Use Microdata Areas (PUMAs). Single-year American Community Survey (ACS) data at the PUMA level was downloaded from the Census Bureau on the following tables: B07013 "Geographical mobility in the past year by tenure for current residence"; B19083 "Gini Index"; B25074 "Household income by gross rent as a percentage of household income in the past 12 months"; and population estimates. Every building in NYC exists within a tax lot; data from several NYC agencies is provided as one combined multipolygon geodatabase called MapPLUTO (version 22v3 was used here), and includes datapoints such as the number of residential units, floors, and assessed property value. A polygon shapefile of areas inundated by Hurricane Sandy was downloaded from the NYC Dept. of Small Business Services. LiDAR elevation rasterfiles at 90m resolution created by NASA and the USGS were downloaded from the UC San Diego's OpenTopography lab.
+    </p><br><br>
+    <h4>Income inequality by Hurricane Sandy impact: </h4>
+    <div>Median Gini index of PUMAs, grouped by % of residential units affected. Higher values represent more inequality in the distribution of income.</div>
+    <div>Categories (explanation above): DVH: very high direct impact (&gt;50%), DH: high direct impact (20-50%), DM: medium direct impact (10-20%), and those with low direct impact: NH: high impact to neighboring areas (&gt;30%), NM: medium impact to neighboring areas (10-30%), NL: low impact to neighboring areas (&lt;10%).</div>
+    <div>Of major note in this chart, the areas with less direct impact by the hurricane saw a small amount of change to their overall inequality in income distribution, whereas areas with more direct impact had significant fluctuation. One possible interpretation of this is as follows: The highest-hit category experienced a large drop in inequality when impacted in 2012, as the lowest-income families were displaced. The following year, inequality jumped, as gentrifying high-income households moved into the vacancies at the same time as many families attempted to return. As lower-income households were priced out in following years, inequality lowered.</div>
+    <div id="containerGini"> </div>
+    <br><br><br>
+    <div>Coming next: Scatterplot of rate of net migration by year, category median</div>
+    <div id="containerCRNM"> </div>
+    <br><br>
+    <p>Non-D3 visualizations from this project:</p>
+    Still being adjusted: Every residential building in Brooklyn, color-coded by elevation from sea level of its lowest floor. Reload the page and watch it animate! Used for a network model to determine if height was a factor in migration.<br>
+    <object data="./BK_90m_PUMA_elev.pdf#toolbar=0" height="700" width="1000"></object><br><br>
+    The differences between population estimates from the ACS, versus the ones calculated to fill in missing values.<br>
+    <img src="./Difference-estd-acs-population.png"></img> 
+    <script src="../lib/d3.js"></script>
+    <script src="/lib/d3.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
