@@ -1,19 +1,35 @@
 <!DOCTYPE html>
   <head>
     <meta charset="utf-8">
-    <title>Interactive Data Visualization Tutorial</title>
+    <title>HBURS AEP</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
-    <h3>Section 2 | Distributions</h3>
+    <h3>Selective enforcement of housing violations, NYC 2015</h3>
+    <h5>Alessandro G. Magnasco, 2022. amagnasco@gradcenter.cuny.edu</h5>
+    <p>This is part of a broader project that applies machine learning to find patterns in the abuse of the human right to housing in NYC.</p>
     <div>
-      This is an anonymized version of a dataset that I derived from official NYC data sources. Each dot is a building in NYC that had housing violations in 2015.
-      Key: The X axis is the count of class C violations (critical) issued to that building.
-      The Y axis is the count of repairs made to that building.
-      Red dots were placed in the following year's Alternative Enforcement Program and blue aren't.
-      Dots are sized by the sum dollar cost of repairs done by the City on those buildings.
+      Each dot is a building in NYC that had housing violations in 2015. Three different official data sources were merged, imported into Pandas dataframes, filtered down by the relevant criteria, dropped rows with critical null values, ensured there were no duplicates, and aggregated by BBL number. Then, a full outer join was performed to combine the 3 datasets
+      into a new “bg” dataframe using the BBL identifier as key.
     </div>
+    <div>  
+      Key: The X axis is the count of class C violations (critical) issued to that building in 2015.
+      The Y axis is the count of repairs made to that building. Both axes are scaled to the power of -2 to "zoom in" on a busy corner.
+      Red dots were placed in the following year's Alternative Enforcement Program, and blue were not.
+      Dots are sized by the sum dollar cost of repairs done by the City on those buildings.
+      A small gaussian blur was appllied to the red dots to make them stand out more.
+    </div>
+    <p>NYC HPD, “Alternative Enforcement Program”. <a href="https://www1.nyc.gov/site/hpd/services-and-information/alternative-enforcement-program-aep.page">Accessed July 2022</a>: "Selection criteria for AEP include the number of class "B" hazardous and class "C" immediately hazardous housing maintenance code violations and the dollar value of emergency repair charges incurred as a result of the work performed by HPD.
+      Failure to correct the qualifying conditions may result in emergency repair charges, liens, and significant fees. Only multiple dwellings are selected.</p>
+    <p>Explanation: these are the two primary factors supposed to be taken into consideration by HPD for selective enforcement in AEP. We would expect to see a clear relationship; since there is none, there must be extraofficial criteria not being acknowledged by HPD.</p>
+    <p>Sources:
+    </p>
+    <ul>
+      <li><a href="https://data.cityofnewyork.us/Housing-Development/Housing-Maintenance-Code-Violations/wvxf-dwi5">Housing maintenance code violations</a></li>
+      <li><a href="https://data.cityofnewyork.us/Housing-Development/Open-Market-Order-OMO-Charges/mdbu-nrqn">Open market orders for emergency repair</a></li>
+      <li><a href="https://data.cityofnewyork.us/Housing-Development/Buildings-Selected-for-the-Alternative-Enforcement/hcir-3275">Buildings selected for alternative enforcement</a></li>
+    </ul>
     <div id="container"> </div>
     <script src="../lib/d3.js"></script>
     <script src="/lib/d3.js"></script>
